@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Dɔn ka Di - Cours de Danse</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simple-line-icons/2.5.5/css/simple-line-icons.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    
+    <header class="hero">
+        <div class="content">
+            <!-- Image derrière le titre -->
+            <div class="title-background">
+                <h1>Bienvenue chez Dɔn ka Di</h1>
+                <p>Rejoignez-nous pour découvrir la passion de la danse !</p>
+            </div>
+            <p>                                                  </p>
+            <a href="#about" class="btn">Créer un compte</a>
+        </div>
+    </header>
+    
+
+   
+    <section id="about">
+        <h2>À propos de Don ka Di</h2>
+        <div class="description-container">
+            <p class="description-text">
+                Don ka Di propose des cours de danse qui mêlent passion, rythme et énergie pour tous les niveaux...
+            </p>
+            <div class="more-text">
+                <p>
+                    La danse africaine fait référence à un ensemble de styles de danse 
+                    qui proviennent du continent africain et qui sont profondément ancrés dans les traditions 
+                    culturelles, les rituels, et les célébrations des différentes communautés africaines. 
+                    Chaque région, ethnie ou pays peut avoir ses propres formes de danse, 
+                    chacune avec ses caractéristiques uniques.               
+                 </p>
+                <!-- PDF sur le règlement intérieur -->
+                <div class="pdf-preview">
+                    <img src="apdf.png" alt="Aperçu du règlement intérieur">
+                    <p>Règlement intérieur.pdf</p>
+                </div>
+                <embed src="pdftest.pdf" type="application/pdf" class="pdf-file">
+            </div>
+            <button id="toggle-button" class="toggle-btn">▼</button>
+        </div>
+    </section>
+    
+
+   
+    <section id="courses">
+        <h2>Nos Cours</h2>
+        <div class="course-list">
+            <div class="course-item">
+                <h3>Danse Moderne</h3>
+                <p>Des mouvements dynamiques et modernes pour tous les âges.</p>
+            </div>
+            <div class="course-item">
+                <h3>Danse Traditionnelle</h3>
+                <p>Découvrez les danses traditionnelles et leur histoire.</p>
+            </div>
+        </div>
+    </section>
+
+   
+    <section id="gallery">
+        <h2>Stages de danse - Années précédentes</h2>
+        <div class="photo-grid">
+            <div class="photo-item">
+                <img src="stage 1.jpeg" alt="Stage de danse 1">
+            </div>
+            <div class="photo-item">
+                <img src="stage 2.jpeg" alt="Stage de danse 2">
+            </div>
+            <div class="photo-item">
+                <img src="stage 3.jpeg" alt="Stage de danse 3">
+            </div>
+            <div class="photo-item">
+                <img src="stage 4.jpeg" alt="Stage de danse 4">
+            </div>
+        </div>
+    </section>
+    
+    
+        <!-- Lightbox -->
+        <div id="lightbox" class="lightbox">
+            <span class="close">&times;</span>
+            <img class="lightbox-img">
+            <a class="prev">&#10094;</a>
+            <a class="next">&#10095;</a>
+        </div>
+    </section>
+    
+    
+
+    <script src="script.js"></script>
+</body>
+</html>
