@@ -95,6 +95,7 @@ section {
 }
 
 #about > * {
+    display: flex;
     position: relative;
     z-index: 2;
     max-width: 1200px;
@@ -525,4 +526,159 @@ form button {
     margin: 0 auto;
     text-align: center;
     border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* New Info Section Styles */
+.info-section {
+    background-color: #f8f9fa;
+    padding: 40px 20px;
+    margin: 0;
+}
+
+.info-container {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+}
+
+.info-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    max-width: 500px;
+    background: white;
+    padding: 25px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.info-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.info-item i {
+    font-size: 2rem;
+    color: #72685f;
+    margin-top: 5px;
+}
+
+.info-content h3 {
+    color: #333;
+    margin-bottom: 8px;
+    font-size: 1.4rem;
+}
+
+.info-content p {
+    color: #666;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .info-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+    }
+    
+    .info-item {
+        width: 100%;
+        max-width: 100%;
+    }
+}
+
+/* Styles pour la mind map */
+.mindmap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.mindmap-item {
+    background: #D2B48C;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #333;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+/* Taille des cercles */
+.mindmap-item.main {
+    width: 150px;
+    height: 150px;
+    background: #8B4513;
+    color: white;
+    font-size: 1.2rem;
+    margin: 20px;
+}
+
+.mindmap-item:not(.main) {
+    width: 120px;
+    height: 120px;
+    margin: 10px;
+}
+
+.mindmap-item.small {
+    width: 100px;
+    height: 100px;
+    background: #F5DEB3;
+    font-size: 0.9rem;
+}
+
+/* Animation au survol */
+.mindmap-item:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .mindmap {
+        gap: 15px;
+    }
+    
+    .mindmap-item.main {
+        width: 120px;
+        height: 120px;
+        font-size: 1rem;
+    }
+    
+    .mindmap-item:not(.main) {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .mindmap-item.small {
+        width: 80px;
+        height: 80px;
+        font-size: 0.8rem;
+    }
+}
+
+.about-description {
+    max-width: 800px;
+    margin: 40px auto;
+    text-align: center;
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #666;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
 }
