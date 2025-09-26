@@ -43,7 +43,7 @@ header.hero .content {
 }
 
 header.hero .content h1 {
-    font-size: 4rem;
+    font-size: 2rem;
     margin-bottom: 20px;
 }
 
@@ -545,8 +545,7 @@ form button {
 }
 
 .info-item {
-    display: flex;
-    align-items: flex-start;
+    display: block;
     gap: 15px;
     max-width: 500px;
     background: white;
