@@ -437,6 +437,36 @@ form button {
     right: 20px;
 }
 
+/* Styles pour les indicateurs du carrousel */
+.slider-dots {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 12px;
+    z-index: 10;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+}
+
+.dot:hover {
+    background: rgba(255, 255, 255, 0.8);
+}
+
+.dot.active {
+    background: white;
+    transform: scale(1.2);
+}
+
 /* Ajustement du contenu par-dessus le carrousel */
 .title-background, .info-banner, h1 {
     pointer-events: auto;
@@ -680,4 +710,226 @@ form button {
     padding: 20px;
     background: rgba(255, 255, 255, 0.8);
     border-radius: 10px;
+}
+
+/* Styles pour la section Stage 8 Mars */
+.stage-section {
+    padding: 80px 20px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.stage-section::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.03)"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+    opacity: 0.5;
+}
+
+.stage-header {
+    text-align: center;
+    margin-bottom: 60px;
+    position: relative;
+    z-index: 2;
+}
+
+.stage-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+    position: relative;
+    display: inline-block;
+}
+
+.stage-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100px;
+    height: 4px;
+    background: linear-gradient(90deg, #ffd700, #ffed4e);
+    border-radius: 2px;
+}
+
+.stage-subtitle {
+    font-size: 1.3rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 20px;
+    font-style: italic;
+}
+
+.stage-date {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 12px 25px;
+    border-radius: 30px;
+    color: white;
+    font-size: 1.1rem;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.stage-date i {
+    color: #ffd700;
+    font-size: 1.2rem;
+}
+
+.stage-gallery {
+    max-width: 1400px;
+    margin: 0 auto 50px;
+    position: relative;
+    z-index: 2;
+}
+
+.stage-gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    padding: 0 20px;
+}
+
+.stage-photo-item {
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+    background: white;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    aspect-ratio: 4/3;
+    cursor: pointer;
+}
+
+.stage-photo-item.featured {
+    grid-column: span 2;
+    grid-row: span 2;
+    aspect-ratio: 16/9;
+}
+
+.stage-photo-item:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+.stage-photo-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.stage-photo-item:hover img {
+    transform: scale(1.1);
+}
+
+.photo-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.7) 100%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 20px;
+}
+
+.stage-photo-item:hover .photo-overlay {
+    opacity: 1;
+}
+
+.photo-icon {
+    background: rgba(255, 255, 255, 0.9);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translateY(20px);
+    transition: transform 0.4s ease;
+}
+
+.stage-photo-item:hover .photo-icon {
+    transform: translateY(0);
+}
+
+.photo-icon i {
+    color: #764ba2;
+    font-size: 1.5rem;
+}
+
+.stage-description {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+    position: relative;
+    z-index: 2;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.stage-description p {
+    color: white;
+    font-size: 1.2rem;
+    line-height: 1.8;
+    margin: 0;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive pour la section Stage 8 Mars */
+@media (max-width: 1024px) {
+    .stage-photo-item.featured {
+        grid-column: span 1;
+        grid-row: span 1;
+        aspect-ratio: 4/3;
+    }
+}
+
+@media (max-width: 768px) {
+    .stage-section {
+        padding: 60px 15px;
+    }
+    
+    .stage-title {
+        font-size: 2.5rem;
+    }
+    
+    .stage-subtitle {
+        font-size: 1.1rem;
+    }
+    
+    .stage-gallery-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 0 10px;
+    }
+    
+    .stage-photo-item.featured {
+        aspect-ratio: 4/3;
+    }
+    
+    .stage-description {
+        padding: 20px;
+    }
+    
+    .stage-description p {
+        font-size: 1.1rem;
+    }
 }
