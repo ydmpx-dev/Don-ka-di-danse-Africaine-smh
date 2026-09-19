@@ -1,131 +1,145 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Gestion du carrousel
-    const slides = document.querySelectorAll('.slide');
-    const prevBtn = document.querySelector('.prev-btn');
-    const nextBtn = document.querySelector('.next-btn');
-    const dots = document.querySelectorAll('.dot');
-    let currentSlide = 0;
-    const slideInterval = 3000; // Change d'image toutes les 3 secondes
-    let slideTimer;
 
-    // Fonction pour afficher une diapositive spécifique
-    function showSlide(n) {
-        // Masquer toutes les diapositives
-        slides.forEach(slide => {
-            slide.classList.remove('active');
+    // Gestion générique d'un carrousel (utilisé pour le hero et les affiches)
+    function initCarousel(root, options = {}) {
+        if (!root) return;
+
+        const {
+            slideSelector = '.slide',
+            prevSelector = '.prev-btn',
+            nextSelector = '.next-btn',
+            dotsContainerSelector = '.slider-dots',
+            interval = 3000,
+        } = options;
+
+        const slides = root.querySelectorAll(slideSelector);
+        const prevBtn = root.querySelector(prevSelector);
+        const nextBtn = root.querySelector(nextSelector);
+        const dotsContainer = root.querySelector(dotsContainerSelector);
+
+        if (!slides.length || !dotsContainer) return;
+
+        // Générer les indicateurs dynamiquement (s'adapte si des diapositives sont ajoutées/retirées)
+        dotsContainer.innerHTML = '';
+        const dots = Array.from(slides).map((_, index) => {
+            const dot = document.createElement('span');
+            dot.className = 'dot';
+            dot.dataset.slide = index;
+            dotsContainer.appendChild(dot);
+            return dot;
         });
-        
-        // Masquer tous les indicateurs
-        dots.forEach(dot => {
-            dot.classList.remove('active');
-        });
-        
-        // Gérer le débordement des indices
-        if (n >= slides.length) {
-            currentSlide = 0;
-        } else if (n < 0) {
-            currentSlide = slides.length - 1;
-        } else {
-            currentSlide = n;
+
+        let currentSlide = 0;
+        let slideTimer;
+
+        function showSlide(n) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
+
+            currentSlide = (n + slides.length) % slides.length;
+
+            slides[currentSlide].classList.add('active');
+            dots[currentSlide].classList.add('active');
         }
-        
-        // Afficher la diapositive actuelle
-        slides[currentSlide].classList.add('active');
-        // Activer l'indicateur correspondant
-        dots[currentSlide].classList.add('active');
-    }
 
-    // Fonction pour passer à la diapositive suivante
-    function nextSlide() {
-        showSlide(currentSlide + 1);
-        resetTimer();
-    }
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+            resetTimer();
+        }
 
-    // Fonction pour passer à la diapositive précédente
-    function prevSlide() {
-        showSlide(currentSlide - 1);
-        resetTimer();
-    }
+        function prevSlide() {
+            showSlide(currentSlide - 1);
+            resetTimer();
+        }
 
-    // Démarrer le défilement automatique
-    function startSlideShow() {
-        slideTimer = setInterval(nextSlide, slideInterval);
-    }
+        function startSlideShow() {
+            slideTimer = setInterval(() => showSlide(currentSlide + 1), interval);
+        }
 
-    // Réinitialiser le minuteur
-    function resetTimer() {
-        clearInterval(slideTimer);
+        function resetTimer() {
+            clearInterval(slideTimer);
+            startSlideShow();
+        }
+
+        if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+        if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                showSlide(index);
+                resetTimer();
+            });
+        });
+
+        // Défilement tactile pour mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        root.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+
+        root.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            const swipeThreshold = 30;
+            if (touchStartX - touchEndX > swipeThreshold) nextSlide();
+            else if (touchEndX - touchStartX > swipeThreshold) prevSlide();
+        }, { passive: true });
+
+        showSlide(0);
         startSlideShow();
     }
 
-    // Événements pour les boutons de navigation
-    nextBtn.addEventListener('click', nextSlide);
-    prevBtn.addEventListener('click', prevSlide);
-
-    // Événements pour les indicateurs cliquables
-    dots.forEach((dot, index) => {
-        dot.addEventListener('click', () => {
-            showSlide(index);
-            resetTimer();
-        });
+    // Carrousel principal (header)
+    initCarousel(document.querySelector('.slider'), {
+        interval: 3000,
     });
 
-    // Afficher la première diapositive
-    showSlide(0);
-    // Démarrer le défilement automatique
-    startSlideShow();
+    // Petit carrousel des affiches
+    initCarousel(document.querySelector('.affiche-carousel'), {
+        slideSelector: '.affiche-slide',
+        prevSelector: '.affiche-prev',
+        nextSelector: '.affiche-next',
+        dotsContainerSelector: '.affiche-dots',
+        interval: 5000,
+    });
 
-    // Gestion du défilement tactile pour mobile
-    let touchStartX = 0;
-    let touchEndX = 0;
-
-    const slider = document.querySelector('.slider');
-    slider.addEventListener('touchstart', (e) => {
-        touchStartX = e.changedTouches[0].screenX;
-    }, { passive: true });
-
-    slider.addEventListener('touchend', (e) => {
-        touchEndX = e.changedTouches[0].screenX;
-        handleSwipe();
-    }, { passive: true });
-
-    function handleSwipe() {
-        if (touchEndX < touchStartX) {
-            // Balayage vers la gauche - prochaine diapositive
-            nextSlide();
-        }
-        if (touchEndX > touchStartX) {
-            // Balayage vers la droite - diapositive précédente
-            prevSlide();
-        }
-    }
-
-    // Gestion de la lightbox pour la galerie
-    const galleryItems = document.querySelectorAll('.gallery-item');
+    // Gestion de la lightbox (galerie photos + affiches), groupée par conteneur
     const lightbox = document.getElementById('lightbox');
     const lightboxImage = document.getElementById('lightbox-image');
     const lightboxClose = document.querySelector('.lightbox-close');
     const lightboxPrev = document.querySelector('.lightbox-prev');
     const lightboxNext = document.querySelector('.lightbox-next');
     const lightboxCaption = document.querySelector('.lightbox-caption');
-    
-    let currentImageIndex = 0;
-    const galleryImages = Array.from(galleryItems).map(item => ({
-        src: item.dataset.src,
-        caption: item.querySelector('span').textContent
-    }));
 
-    // Ouvrir la lightbox au clic sur une image
-    galleryItems.forEach((item, index) => {
-        item.addEventListener('click', () => {
-            currentImageIndex = index;
-            openLightbox();
-        });
+    let currentGalleryImages = [];
+    let currentImageIndex = 0;
+
+    function getCaption(el) {
+        const overlaySpan = el.querySelector('.gallery-info span');
+        return el.dataset.caption || (overlaySpan ? overlaySpan.textContent : '');
+    }
+
+    // Ouvrir la lightbox au clic sur une image, en ne naviguant qu'au sein de son groupe
+    document.addEventListener('click', (e) => {
+        const trigger = e.target.closest('.lightbox-trigger');
+        if (!trigger) return;
+
+        const group = trigger.closest('[data-lightbox-group]') || document;
+        const items = Array.from(group.querySelectorAll('.lightbox-trigger'));
+
+        currentGalleryImages = items.map(item => ({
+            src: item.dataset.src,
+            caption: getCaption(item),
+        }));
+        currentImageIndex = items.indexOf(trigger);
+
+        openLightbox();
     });
 
     function openLightbox() {
-        lightboxImage.src = galleryImages[currentImageIndex].src;
-        lightboxCaption.textContent = galleryImages[currentImageIndex].caption;
+        lightboxImage.src = currentGalleryImages[currentImageIndex].src;
+        lightboxCaption.textContent = currentGalleryImages[currentImageIndex].caption;
         lightbox.classList.add('active');
         document.body.style.overflow = 'hidden';
     }
@@ -136,18 +150,18 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function showNextImage() {
-        currentImageIndex = (currentImageIndex + 1) % galleryImages.length;
+        currentImageIndex = (currentImageIndex + 1) % currentGalleryImages.length;
         updateLightboxImage();
     }
 
     function showPrevImage() {
-        currentImageIndex = (currentImageIndex - 1 + galleryImages.length) % galleryImages.length;
+        currentImageIndex = (currentImageIndex - 1 + currentGalleryImages.length) % currentGalleryImages.length;
         updateLightboxImage();
     }
 
     function updateLightboxImage() {
-        lightboxImage.src = galleryImages[currentImageIndex].src;
-        lightboxCaption.textContent = galleryImages[currentImageIndex].caption;
+        lightboxImage.src = currentGalleryImages[currentImageIndex].src;
+        lightboxCaption.textContent = currentGalleryImages[currentImageIndex].caption;
     }
 
     // Événements pour la lightbox
